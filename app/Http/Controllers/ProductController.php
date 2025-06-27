@@ -12,9 +12,7 @@ class ProductController extends Controller
     {
         $products = Product::query()->get();
         $users = User::query()->get();
-        $cart = resolve(CartService::class)->getUserCart();
-        $totalQuantity = $cart->getTotalQuantity();
 
-        return view('products.index', compact('products', 'users', 'totalQuantity'));
+        return view('products.index', compact('products', 'users'));
     }
 }

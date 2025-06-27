@@ -11,7 +11,10 @@ class CartController extends Controller
 {
     public function addProduct(Product $product)
     {
+        $cart = resolve(CartService::class)->getUserCart();
+
         $cartItem = CartItem::query()
+                ->where('cart_id', $cart->id)
                 ->where('product_id', $product->id)
                 ->first();
 
@@ -24,9 +27,7 @@ class CartController extends Controller
         //можна створити додаткой метод для створення нового товару в кошику і винести в сервіс
         if (!$cartItem) {
 
-            $cart = resolve(CartService::class)->getUserCart();
-
-            CartItem::query()->create([
+            $cartItem = CartItem::query()->create([
                 'product_id' => $product->id,
                 'cart_id' => $cart->id,
                 'quantity' => 1,
@@ -34,7 +35,8 @@ class CartController extends Controller
             ]);
         }
 
-        return redirect()->back()->with('success', 'Product added to cart!');
+//dd($cartItem, $cart->getTotalQuantity(), $cart);
+        return redirect()->route('shop')->with('success', 'Product added to cart!');
     }
 
     public function index()

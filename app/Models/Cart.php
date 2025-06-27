@@ -32,13 +32,8 @@ class Cart extends Model
         return $total;
     }
 
-    public function getTotalQuantity()
+    public function getTotalQuantity(): int
     {
-        $cartItems = $this->cartItems;
-        $total = 0;
-        foreach($cartItems as $item) {
-            $total += $item->quantity;
-        }
-        return $total;
+        return $this->cartItems->sum('quantity');
     }
 }

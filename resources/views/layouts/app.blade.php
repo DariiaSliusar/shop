@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="container">
-        @includeIf('partials.navbar')
+        <x-navbar></x-navbar>
         @yield('content')
     </div>
 

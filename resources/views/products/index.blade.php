@@ -1,29 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
-    <div class="mb-3">
-        @if(!auth()->check())
-
-        <h2>Login As</h2>
-
-        <div>
-            @foreach($users as $user)
-                <a href="{{route('login-as', $user->id)}}" type="button" class="btn btn-secondary">{{$user->name}}</a>
-            @endforeach
-        </div>
-        @endif
-
-        @if(auth()->check())
-
-        <h2>Logged in as {{auth()->user()->name}}</h2>
-
-        <div>
-            <a href="{{route('logout')}}" type="button" class="btn btn-secondary">Logout</a>
-        </div>
-        @endif
-    </div>
-
     <h1>Shop</h1>
 
     <div class="row g-3">
