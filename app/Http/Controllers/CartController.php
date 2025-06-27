@@ -15,11 +15,13 @@ class CartController extends Controller
                 ->where('product_id', $product->id)
                 ->first();
 
+        //можна додати додатковий метод для оновлення ціни
         if ($cartItem) {
             $cartItem->increment('quantity');
-            $cartItem->increment('price', $product->price);
+            $cartItem->price = $cartItem->quantity * $product->price;
         }
 
+        //можна створити додаткой метод для створення нового товару в кошику і винести в сервіс
         if (!$cartItem) {
 
             $cart = resolve(CartService::class)->getUserCart();
@@ -41,16 +43,15 @@ class CartController extends Controller
 
         $cartItems = CartItem::query()->where('cart_id', $cart->id)->with('product')->get();
 
-        $totalPrice = resolve(CartService::class)->getTotalPrice($cartItems);
+        $totalPrice = $cart->getTotalPrice();
 
-        $totalQuantity = resolve(CartService::class)->getTotalQuantity($cartItems);
+        $totalQuantity = $cart->getTotalQuantity();
 
         return view('cart.index', compact('cart', 'totalPrice', 'totalQuantity', 'cartItems'));
     }
 
     public function updateQuantity(Request $request)
     {
-        $cart = resolve(CartService::class)->getUserCart();
         $cartItem = CartItem::query()->findOrFail($request->cartItemId);
 
         if ($request->quantity > 0) {

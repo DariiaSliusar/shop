@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Cart;
+use App\Models\CartItem;
 
 class CartService
 {
@@ -19,29 +20,9 @@ class CartService
 
         return Cart::query()
             ->where('user_id', auth()->id())
-            ->where('session_id', $sessionId)
             ->firstOrCreate([
             'user_id' => auth()->id(),
-            'session_id' => $sessionId,
             'is_guest' => false,
         ]);
-    }
-
-    public function getTotalPrice($cartItems)
-    {
-        $total = 0;
-        foreach($cartItems as $item) {
-            $total += $item->product->price * $item->quantity;
-        }
-        return $total;
-    }
-
-    public function getTotalQuantity($cartItems)
-    {
-        $total = 0;
-        foreach($cartItems as $item) {
-            $total += $item->quantity;
-        }
-        return $total;
     }
 }

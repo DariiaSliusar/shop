@@ -46,7 +46,7 @@ class User extends Authenticatable
         ];
     }
 
-    public function cart()
+    public function cart(): \Illuminate\Database\Eloquent\Relations\HasOne|User
     {
         return $this->hasOne(Cart::class);
     }

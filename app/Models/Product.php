@@ -15,7 +15,7 @@ class Product extends Model
         'image',
     ];
 
-    public function cartItems()
+    public function cartItems(): \Illuminate\Database\Eloquent\Relations\HasMany|Product
     {
         return $this->hasMany(CartItem::class);
     }

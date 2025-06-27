@@ -13,12 +13,12 @@ class CartItem extends Model
         'price',
     ];
 
-    public function cart()
+    public function cart(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Cart::class);
     }
 
-    public function product()
+    public function product(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Product::class);
     }
